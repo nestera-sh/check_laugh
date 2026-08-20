@@ -6,7 +6,7 @@ import org.hibernate.annotations.Audited;
 
 @Data
 @Entity
-@Audited.Table(name="checlistdatabase")
+@Table(name="tasks")
 public class Task {
 
 
@@ -20,7 +20,8 @@ public class Task {
     private String comment;
 
     @Column(name="done")
-    private boolean isDone;
+    private boolean isDone = false;
+
 
 
     //геттеров сеттеров нет т.к. используем lombok
