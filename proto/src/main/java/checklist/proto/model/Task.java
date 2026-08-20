@@ -20,9 +20,11 @@ public class Task {
     private String comment;
 
     @Column(name="done")
-    private boolean isDone = false;
+    private Boolean isDone = false;
 
-
+    public void setDone(Boolean done) {
+        isDone = done;
+    }
 
     //геттеров сеттеров нет т.к. используем lombok
 }

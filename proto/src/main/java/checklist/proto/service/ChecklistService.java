@@ -38,5 +38,12 @@ public class ChecklistService {
 
     };
 
+
+
+    public void markAsDone(Task task){
+        task.setDone(!task.getIsDone());
+        taskRepository.save(task);
+    }
+
 }
 
