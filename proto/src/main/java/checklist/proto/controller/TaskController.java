@@ -3,7 +3,6 @@ package checklist.proto.controller;
 
 import checklist.proto.model.Task;
 import checklist.proto.service.ChecklistService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +28,7 @@ public class TaskController {
     public String findAll(Model model){
 
 
-        List<Task> tasks = taskService.findAll();
+        List<Task> tasks = taskService.findAllSorted();
         model.addAttribute("tasks", tasks);
         return "task-list";
     };
@@ -66,5 +65,17 @@ public class TaskController {
         taskService.markAsDone(taskService.findById(id));
         return "redirect:/tasks";
     };
+    
+    @GetMapping("/task-delete/{id}")
+    public String deleteTaskForm(@PathVariable("id") Long id){
+        taskService.deleteById(id);
+        return "redirect:/tasks";
+    }
+
+    @GetMapping("/task-delete-all")
+    public String deleteAllTasks(){
+        taskService.deleteAllById();
+        return "redirect:/tasks";
+    }
 
 }

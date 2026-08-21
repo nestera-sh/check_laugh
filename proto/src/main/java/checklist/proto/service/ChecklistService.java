@@ -4,46 +4,54 @@ import checklist.proto.model.Task;
 import checklist.proto.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class ChecklistService {
 
-    final private  TaskRepository taskRepository;
+    final private TaskRepository taskRepository;
 
     @Autowired
-    ChecklistService(TaskRepository taskRepository){
+    ChecklistService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
 
     }
 
-    public Task findById(Long id){
+    public Task findById(Long id) {
         return taskRepository.getOne(id);
-    };
+    }
 
-    public List<Task> findAll(){
+    ;
 
-        return taskRepository.findAll();
-    };
+    public List<Task> findAllSorted() {
 
-    public Task saveTask(Task task){
+        return taskRepository.findAllByOrderByIsDoneAsc();
+    }
+
+
+    public Task saveTask(Task task) {
 
         return taskRepository.save(task);
-    };
+    }
 
-    public void deleteById(Long id){
+
+    @Transactional
+    public void deleteById(Long id) {
 
         taskRepository.deleteById(id);
 
-    };
+    }
 
+    @Transactional
+    public void deleteAllById() {
+        taskRepository.deleteAll();
+    }
 
-
-    public void markAsDone(Task task){
+    public void markAsDone(Task task) {
         task.setDone(!task.getIsDone());
         taskRepository.save(task);
     }
-
 }
 
